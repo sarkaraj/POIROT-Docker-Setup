@@ -1,0 +1,9 @@
+:: KAFKA ::
+# version spotify/kafka
+
+
+# Good resource
+# https://gist.github.com/abacaphiliac/f0553548f9c577214d16290c2e751071
+# https://hub.docker.com/r/spotify/kafka/
+# https://github.com/spotify/docker-kafka
+# https://store.docker.com/community/images/spotify/kafka

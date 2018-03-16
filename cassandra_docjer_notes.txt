@@ -1,0 +1,64 @@
+::CASSANDRA::
+
+# To start a cassandra application
+docker run --name cassandra-test --mount source=cassandra-volume,target=/app -d cassandra:latest
+
+# Running bash in the container 'cassandra-test'
+docker exec -it cassandra-test bash
+
+# Running cqlsh in the container 'cassandra-test'
+docker exec -it cassandra-test cqlsh
+
+docker exec -it cassandra-test cqlsh -u cassandra -p cassandra
+
+cqlsh -3 localhost -u cassandra -p cassandra
+
+# Checking status of all nodes of CASSANDRA
+nodetool status
+
+# EXAMPLE OUTPUT
+# Datacenter: datacenter1
+# =======================
+# Status=Up/Down
+# |/ State=Normal/Leaving/Joining/Moving
+# --  Address     Load       Tokens       Owns (effective)  Host ID                               Rack
+# UN  172.17.0.3  88.89 KiB  256          100.0%            87c54483-fe8b-47e4-a1f6-472097257629  rack1
+# UN  172.17.0.2  165.04 KiB  256          100.0%            03706e4a-c49d-4d8f-b4f2-e45c26f9bda4  rack1
+
+
+#Make a cluster
+#Using the environment variables documented below, there are two cluster scenarios: instances on the same machine and instances on separate machines. For the same machine, start the instance as described above. To start other instances, just tell each new node where the first is.
+
+docker run --name <second-cassandra-container-name> -d -e CASSANDRA_SEEDS="$(docker inspect --format='{{ .NetworkSettings.IPAddress }}' <first-cassandra-container-name>)" cassandra:tag
+
+# Example::
+docker run --name cassandra-test2 -d -e CASSANDRA_SEEDS="$(docker inspect --format='{{ .NetworkSettings.IPAddress }}' cassandra-test)" cassandra:latest
+
+# Or you may use the docker run --link option to tell the new node where the first is:
+
+docker run --name some-cassandra2 -d --link some-cassandra:cassandra cassandra:tag
+
+# For separate machines (ie, two VMs on a cloud provider), you need to tell Cassandra what IP address to advertise to the other nodes (since the address of the container is behind the docker bridge).
+
+# Assuming the first machine's IP address is 10.42.42.42 and the second's is 10.43.43.43, start the first with exposed gossip port:
+
+# $ docker run --name some-cassandra -d -e CASSANDRA_BROADCAST_ADDRESS=10.42.42.42 -p 7000:7000 cassandra:tag
+# Then start a Cassandra container on the second machine, with the exposed gossip port and seed pointing to the first machine:
+
+# $ docker run --name some-cassandra -d -e CASSANDRA_BROADCAST_ADDRESS=10.43.43.43 -p 7000:7000 -e CASSANDRA_SEEDS=10.42.42.42 cassandra:tag
+
+
+# The docker exec command allows you to run commands inside a Docker container. The following command line will give you a bash shell inside your cassandra container:
+
+docker exec -it some-cassandra bash
+
+# The Cassandra Server log is available through Docker's container log:
+docker logs some-cassandra
+
+
+# Docker stop cassandra containers
+docker stop cassandra-test2 cassandra-test
+
+# To restart containers
+docker start cassandra-test
+docker start cassandra-test2

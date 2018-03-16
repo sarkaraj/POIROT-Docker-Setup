@@ -1,0 +1,18 @@
+# IMAGES DETAILS:-
+
+
+# Anaconda | Tue Mar 13 2018
+docker pull store/continuumio/anaconda:4.0.0
+docker pull continuumio/anaconda
+docker run -i -t store/continuumio/anaconda /bin/bash
+
+
+
+# Cassandra
+docker pull cassandra:latest
+
+
+
+# Kafka
+# This docker image kafka and zookeeper - No need for an external zookeeper
+docker pull spotify/kafka:latest
