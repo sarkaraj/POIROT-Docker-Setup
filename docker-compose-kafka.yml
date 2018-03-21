@@ -5,7 +5,7 @@ services:
     ports:
      - "9092:9092"
      - "2181:2181"
-    hostname: kafka
+    hostname: kafka_broker
     environment:
      - KAFKA_ADVERTISED_HOST_NAME=kafka
      - KAFKA_ZOOKEEPER_CONNECT=localhost:2181

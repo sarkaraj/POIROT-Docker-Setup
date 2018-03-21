@@ -1,0 +1,17 @@
+version: "3"
+services:
+  kafka:
+    image: wurstmeister/kafka:latest
+    ports:
+     - "9092:9092"
+    hostname: kafka-broker
+    networks: 
+     - zookeeper
+    environment:
+     - KAFKA_ADVERTISED_HOST_NAME=kafka-broker-service
+     - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+     - KAFKA_ADVERTISED_PORT=9092
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
