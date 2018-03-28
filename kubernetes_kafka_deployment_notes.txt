@@ -1,0 +1,1 @@
+kubectl run kafka_broker_service_instance1 --image=spotify/kafka --port=9092 --port=2181

@@ -1,0 +1,16 @@
+version: "3"
+services:
+  zookeeper:
+    image: "wurstmeister/zookeeper"
+    ports:
+     - "2181:2181"
+    hostname: zookeeper
+    environment:
+     - ADVERTISED_HOST_NAME="zk-Server"
+
+  cassandra:
+    image: "cassandra:latest"
+    ports:
+     - "127.0.0.1:9042:9042"
+     - "127.0.0.1:9160:9160"
+    
