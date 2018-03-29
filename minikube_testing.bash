@@ -8,3 +8,8 @@ minikube.exe start --help
 
 # Starting a kubernetes cluster version 1.4
 minikube.exe start --kubernetes-version="v1.4.0" --vm-driver="virtualbox" --alsologtostderr
+
+
+minikube start --vm-driver hyperv --hyperv-virtual-switch "Primary Virtual Switch"
+
+minikube start --vm-driver hyperv --hyperv-virtual-switch "Primary Virtual Switch"
